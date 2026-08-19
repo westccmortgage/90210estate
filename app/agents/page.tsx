@@ -3,6 +3,11 @@ import Link from "next/link";
 import { getMarketplaceAgents, grcrmLoginUrl } from "../lib/crm-marketplace";
 import { PageHero } from "../components/page-hero";
 
+// Listings are edited in GR CRM and must disappear from this site the moment
+// they are unpublished or deleted there, so this page is never cached.
+export const dynamic = "force-dynamic";
+export const revalidate = 0;
+
 export const metadata: Metadata = {
   title: "Local Real Estate Agents",
   description: "Meet verified independent real estate professionals serving Beverly Hills and the surrounding Westside.",

@@ -35,7 +35,7 @@ export async function POST(req: NextRequest) {
   }
 
   const apiKey = process.env.RESEND_API_KEY;
-  const to = process.env.CONTACT_TO_EMAIL || 'info@westccrealty.com';
+  const to = process.env.CONTACT_TO_EMAIL || 'westccmortgage@gmail.com';
   // NOTE: the "from" address must be on a domain verified in your email
   // provider (Resend). Set CONTACT_FROM_EMAIL once westccrealty.com is verified.
   const from = process.env.CONTACT_FROM_EMAIL || '90210 Estate <onboarding@resend.dev>';

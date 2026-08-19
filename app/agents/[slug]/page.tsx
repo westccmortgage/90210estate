@@ -3,6 +3,11 @@ import Link from "next/link";
 import { notFound } from "next/navigation";
 import { formatPrice, getMarketplaceAgent } from "../../lib/crm-marketplace";
 
+// Listings are edited in GR CRM and must disappear from this site the moment
+// they are unpublished or deleted there, so this page is never cached.
+export const dynamic = "force-dynamic";
+export const revalidate = 0;
+
 type Props = { params: { slug: string } };
 
 export async function generateMetadata({ params }: Props): Promise<Metadata> {

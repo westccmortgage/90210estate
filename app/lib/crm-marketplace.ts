@@ -53,6 +53,8 @@ const crmOrigin = (process.env.GRCRM_PUBLIC_URL || process.env.NEXT_PUBLIC_GRCRM
 const marketplaceId = process.env.MARKETPLACE_ID || "90210-estate";
 const feedUrl = process.env.CRM_PUBLIC_FEED_URL || `${crmOrigin}/.netlify/functions/marketplace-public-feed`;
 
+// Never cached: the CRM is the system of record, and a listing removed there has
+// to vanish from this site on the next request, not several minutes later.
 async function readFeed<T>(query = ""): Promise<T | null> {
   try {
     const url = new URL(feedUrl);

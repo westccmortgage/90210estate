@@ -9,7 +9,7 @@ export function SiteFooter() {
           <p>An independent local showcase for Beverly Hills homes, neighborhoods, and real estate professionals.</p>
           <p className="contact-lines">
             <a href="tel:+13106541577">(310) 654-1577</a><br />
-            <a href="mailto:info@westccrealty.com">info@westccrealty.com</a>
+            <a href="mailto:westccmortgage@gmail.com">westccmortgage@gmail.com</a>
           </p>
         </div>
         <div>

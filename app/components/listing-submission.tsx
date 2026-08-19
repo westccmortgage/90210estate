@@ -17,7 +17,7 @@ export function ListingSubmission() {
       `MLS / listing URL: ${data.get("url")}`,
       `Notes: ${data.get("notes")}`,
     ];
-    window.location.href = `mailto:info@westccrealty.com?subject=${encodeURIComponent("90210 Estate — listing submission")}&body=${encodeURIComponent(lines.join("\n"))}`;
+    window.location.href = `mailto:westccmortgage@gmail.com?subject=${encodeURIComponent("90210 Estate — listing submission")}&body=${encodeURIComponent(lines.join("\n"))}`;
     setStatus("Your email app has been opened with the submission details. Attach listing photos or a media link before sending.");
   }
   return (

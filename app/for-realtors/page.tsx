@@ -1,5 +1,6 @@
 import type { Metadata } from "next";
 import { ListingSubmission } from "../components/listing-submission";
+import { SocialPromoCta } from "../components/social-promo-cta";
 import { PageHero } from "../components/page-hero";
 import { grcrmLoginUrl } from "../lib/crm-marketplace";
 
@@ -42,6 +43,8 @@ export default function RealtorsPage() {
 
         <h2 style={{ marginTop: 70 }}>Prefer a manual submission?</h2>
         <p className="lead">Use this launch form and we will review the listing with you. Nothing is published until authorization and agent identity are confirmed.</p>
+        <SocialPromoCta />
+
         <ListingSubmission />
       </section>
     </main>
