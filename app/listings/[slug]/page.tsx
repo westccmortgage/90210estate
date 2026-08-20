@@ -77,6 +77,14 @@ export default async function ListingPage({ params }: Props) {
           {agent?.title && <p>{agent.title}</p>}
           {agent?.brokerage && <p><strong>{agent.brokerage}</strong></p>}
           {agent?.dre_license && <p className="license-line">{agent.dre_license}</p>}
+          {/* The number and address are worth reading, not just clicking: people
+              copy them, dial from another phone, or check who they are calling. */}
+          {(agent?.phone || agent?.email) && (
+            <ul className="agent-contact-lines">
+              {agent?.phone && <li><a href={`tel:${agent.phone}`}>{agent.phone}</a></li>}
+              {agent?.email && <li><a href={`mailto:${agent.email}?subject=${encodeURIComponent(`Question about ${listing.address}`)}`}>{agent.email}</a></li>}
+            </ul>
+          )}
           <div className="agent-contact-actions">
             {agent?.phone && <a className="button navy" href={`tel:${agent.phone}`}>Call agent</a>}
             {agent?.email && <a className="button outline" href={`mailto:${agent.email}?subject=${encodeURIComponent(`Question about ${listing.address}`)}`}>Email agent</a>}

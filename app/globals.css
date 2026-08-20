@@ -290,3 +290,10 @@ h2 { margin-bottom: 0; font-size: clamp(38px, 4vw, 58px); line-height: 1.03; fon
   .agent-profile-actions .button { width: 100%; }
   .realtor-cta { padding: 28px 22px; }
 }
+
+/* Contact details read as text first and stay clickable. */
+.agent-contact-lines { list-style: none; padding: 0; margin: 14px 0 16px; display: grid; gap: 6px; }
+.agent-contact-lines li { font-size: 15px; }
+.agent-contact-lines a { color: inherit; text-decoration: none; border-bottom: 1px solid currentColor; padding-bottom: 1px; }
+.agent-contact-lines a:hover { opacity: .72; }
+.agent-contact-lines.light a { color: #fff; border-bottom-color: rgba(255,255,255,.45); }

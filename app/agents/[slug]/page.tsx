@@ -37,6 +37,12 @@ export default async function AgentPage({ params }: Props) {
             <h1>{agent.display_name}</h1>
             {agent.title && <p className="agent-title">{agent.title}</p>}
             {agent.dre_license && <p className="license-line">{agent.dre_license}</p>}
+            {(agent.phone || agent.email) && (
+              <ul className="agent-contact-lines light">
+                {agent.phone && <li><a href={`tel:${agent.phone}`}>{agent.phone}</a></li>}
+                {agent.email && <li><a href={`mailto:${agent.email}`}>{agent.email}</a></li>}
+              </ul>
+            )}
             <div className="agent-profile-actions">
               {agent.phone && <a className="button gold" href={`tel:${agent.phone}`}>Call</a>}
               {agent.email && <a className="button glass" href={`mailto:${agent.email}`}>Email</a>}
