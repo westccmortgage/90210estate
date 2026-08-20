@@ -44,8 +44,17 @@ export default async function ListingPage({ params }: Props) {
 
       {photos.length > 0 && (
         <section className="shell listing-gallery">
-          {photos.slice(0, 6).map((photo, index) => (
-            <img key={photo.url} src={photo.url} alt={photo.alt || `${listing.address}, photo ${index + 1}`} />
+          {/* Agents publish thirty or forty photos; showing six threw most of
+              the property away. Everything past the first screen loads lazily
+              so a full gallery costs nothing until it is scrolled to. */}
+          {photos.map((photo, index) => (
+            <img
+              key={photo.url}
+              src={photo.url}
+              alt={photo.alt || `${listing.address}, photo ${index + 1}`}
+              loading={index < 3 ? 'eager' : 'lazy'}
+              decoding="async"
+            />
           ))}
         </section>
       )}
