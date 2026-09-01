@@ -1,13 +1,26 @@
+import type { Metadata } from "next";
 import Link from "next/link";
 import { LocationSearch } from "./components/location-search";
 
-const neighborhoods = [
-  ["Beverly Hills", "Iconic residential streets, established estates, and a globally recognized city center."],
-  ["Trousdale Estates", "Architectural homes, privacy, and expansive views above the city."],
-  ["Beverly Hills Post Office", "Hillside living and winding residential streets just beyond the city boundary."],
-  ["Bel Air", "Gated estates, generous lots, and secluded canyon settings across the hills."],
-  ["Holmby Hills", "Landmark estates and quiet residential avenues in the Platinum Triangle."],
-  ["Sunset Strip", "View properties, contemporary architecture, and quick access to West Hollywood."],
+export const metadata: Metadata = {
+  title: "Beverly Hills Real Estate & Homes for Sale",
+  description: "Explore Beverly Hills real estate, homes for sale, open houses, neighborhoods, and local agents across Beverly Hills, Bel Air, Holmby Hills, and the Westside.",
+  alternates: { canonical: "/" },
+  openGraph: {
+    title: "Beverly Hills Real Estate & Homes for Sale | 90210 Estate",
+    description: "Agent-authorized homes, open houses, neighborhoods, and local real estate professionals across Beverly Hills and the Westside.",
+    url: "/",
+    type: "website",
+  },
+};
+
+const featuredNeighborhoods = [
+  { name: "Beverly Hills", slug: "beverly-hills", description: "Iconic residential streets, established estates, and a globally recognized city center." },
+  { name: "Trousdale Estates", slug: "trousdale-estates", description: "Architectural homes, privacy, and expansive views above the city." },
+  { name: "Beverly Hills Post Office", slug: "beverly-hills-post-office", description: "Hillside living and winding residential streets beyond the Beverly Hills city boundary." },
+  { name: "Bel Air", slug: "bel-air", description: "Gated estates, generous lots, and secluded canyon settings across the hills." },
+  { name: "Holmby Hills", slug: "holmby-hills", description: "Landmark estates and quiet residential avenues in the Platinum Triangle." },
+  { name: "Sunset Strip", slug: "sunset-strip", description: "View properties, contemporary architecture, and quick access to West Hollywood." },
 ];
 
 export default function Home() {
@@ -58,11 +71,11 @@ export default function Home() {
             <Link className="text-link desktop-only" href="/neighborhoods">Explore all neighborhoods <span>→</span></Link>
           </div>
           <div className="neighborhood-grid">
-            {neighborhoods.map(([name, description], index) => (
-              <Link href={`/listings?area=${encodeURIComponent(name)}`} className="neighborhood" key={name}>
+            {featuredNeighborhoods.map((area, index) => (
+              <Link href={`/neighborhoods/${area.slug}`} className="neighborhood" key={area.slug}>
                 <span className="neighborhood-number">0{index + 1}</span>
-                <h3>{name}</h3>
-                <p>{description}</p>
+                <h3>{area.name}</h3>
+                <p>{area.description}</p>
                 <span className="arrow" aria-hidden="true">↗</span>
               </Link>
             ))}
@@ -109,7 +122,7 @@ export default function Home() {
           </div>
           <div className="finance-actions">
             <Link className="button gold" href="/financing">Estimate payment</Link>
-            <a className="button glass" href="https://westccmortgage.com" target="_blank" rel="noreferrer">Get pre-approved ↗</a>
+            <a className="button glass" href="https://westcoastcapitalmortgage.com" target="_blank" rel="noreferrer">Get pre-approved ↗</a>
           </div>
         </div>
       </section>
