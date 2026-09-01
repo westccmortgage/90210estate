@@ -13,6 +13,7 @@ const routes: Array<{
   priority: number;
 }> = [
   { path: "", changeFrequency: "daily", priority: 1 },
+  { path: "/90210-homes-for-sale", changeFrequency: "daily", priority: 0.98 },
   { path: "/listings", changeFrequency: "daily", priority: 0.95 },
   { path: "/neighborhoods", changeFrequency: "weekly", priority: 0.9 },
   { path: "/open-houses", changeFrequency: "daily", priority: 0.85 },
