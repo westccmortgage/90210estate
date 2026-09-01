@@ -9,8 +9,9 @@ export const dynamic = "force-dynamic";
 export const revalidate = 0;
 
 export const metadata: Metadata = {
-  title: "Local Real Estate Agents",
-  description: "Meet verified independent real estate professionals serving Beverly Hills and the surrounding Westside.",
+  title: "Beverly Hills Real Estate Agents",
+  description: "Meet verified independent real estate professionals serving Beverly Hills, Bel Air, Holmby Hills, and the surrounding Westside.",
+  alternates: { canonical: "/agents" },
 };
 
 export default async function AgentsPage() {
