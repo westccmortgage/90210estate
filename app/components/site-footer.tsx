@@ -33,7 +33,7 @@ export function SiteFooter() {
             90210 Estate is an independent real estate marketing platform. Properties are presented with authorization from their respective listing agents. Information is deemed reliable but is not guaranteed and should be independently verified.
           </p>
           <p>
-            Mortgage services are provided separately by West Coast Capital Mortgage Inc., NMLS #2817729. Anatoliy Kanevsky, NMLS #2775380, CA DRE Broker #01385024. Equal Housing Opportunity. This is not a commitment to lend.
+            Mortgage services are provided separately by West Coast Capital Mortgage Inc., NMLS #2817729, CA DRE Corporation License #02440065. Anatoliy Kanevsky, NMLS #2775380, CA DRE Broker #01385024. Equal Housing Opportunity. This is not a commitment to lend.
           </p>
           <p>© {new Date().getFullYear()} 90210 Estate. All rights reserved.</p>
         </div>

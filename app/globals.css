@@ -152,6 +152,16 @@ h2 { margin-bottom: 0; font-size: clamp(38px, 4vw, 58px); line-height: 1.03; fon
 .calculator-breakdown { margin-top: 32px; padding-top: 22px; border-top: 1px solid rgba(255,255,255,.2); }
 .calculator-breakdown p { display: flex; justify-content: space-between; margin-bottom: 11px; color: #d1dae1; font-size: 13px; }
 .calculator-breakdown strong { color: white; }
+.finance-faq { border-top: 1px solid var(--line); }
+.finance-faq details { border-bottom: 1px solid var(--line); }
+.finance-faq summary { position: relative; padding: 25px 52px 25px 0; color: var(--navy); font-family: var(--serif); font-size: 21px; line-height: 1.35; cursor: pointer; list-style: none; }
+.finance-faq summary::-webkit-details-marker { display: none; }
+.finance-faq summary::after { content: "+"; position: absolute; right: 8px; top: 22px; color: #9a6c31; font-family: Arial, Helvetica, sans-serif; font-size: 27px; font-weight: 300; }
+.finance-faq details[open] summary::after { content: "−"; }
+.finance-faq details p { max-width: 800px; margin: -4px 52px 25px 0; color: var(--muted); font-size: 16px; line-height: 1.7; }
+.mortgage-disclosure { display: grid; gap: 6px; }
+.mortgage-disclosure strong { color: var(--navy); font-family: var(--serif); font-size: 20px; font-weight: 500; }
+.mortgage-disclosure a { width: fit-content; color: var(--navy); font-weight: 700; }
 
 .site-footer { color: #b9c5cf; background: #071723; }
 .footer-main { padding-top: 70px; padding-bottom: 62px; display: grid; grid-template-columns: 2fr 1fr 1fr; gap: 70px; }

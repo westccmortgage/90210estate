@@ -39,9 +39,8 @@ export function PaymentCalculator() {
           <p><span>Estimated property tax</span><strong>{money(result.tax)}</strong></p>
           <p><span>Estimated insurance</span><strong>{money(result.insurance)}</strong></p>
         </div>
-        <a className="button gold" href="https://westccmortgage.com" target="_blank" rel="noreferrer" style={{ marginTop: 24 }}>Check my options ↗</a>
+        <a className="button gold" href="https://westcoastcapitalmortgage.com/buy?utm_source=90210estate&utm_medium=referral&utm_campaign=financing_calculator" target="_blank" rel="noreferrer" style={{ marginTop: 24 }}>Review purchase options ↗</a>
       </div>
     </div>
   );
 }
-
