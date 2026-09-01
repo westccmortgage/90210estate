@@ -9,8 +9,15 @@ export const dynamic = "force-dynamic";
 export const revalidate = 0;
 
 export const metadata: Metadata = {
-  title: "Homes for Sale",
-  description: "Search verified homes represented by local agents across Beverly Hills, Bel Air, and Holmby Hills.",
+  title: "Beverly Hills Homes for Sale",
+  description: "Search agent-authorized homes for sale across Beverly Hills, Bel Air, Holmby Hills, and nearby Westside neighborhoods.",
+  alternates: { canonical: "/listings" },
+  openGraph: {
+    title: "Beverly Hills Homes for Sale | 90210 Estate",
+    description: "Browse agent-authorized homes across Beverly Hills and the Westside.",
+    url: "/listings",
+    type: "website",
+  },
 };
 
 export default async function ListingsPage() {
