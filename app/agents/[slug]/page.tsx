@@ -12,10 +12,21 @@ type Props = { params: { slug: string } };
 
 export async function generateMetadata({ params }: Props): Promise<Metadata> {
   const data = await getMarketplaceAgent(params.slug);
-  if (!data) return { title: "Agent not found" };
+  if (!data) return { title: "Agent not found", robots: { index: false, follow: false } };
+
+  const description = data.agent.bio || `Local real estate professional at ${data.agent.brokerage || "Beverly Hills and the Westside"}.`;
+  const canonical = `/agents/${data.agent.slug}`;
   return {
     title: data.agent.display_name,
-    description: data.agent.bio || `Local real estate professional at ${data.agent.brokerage || "Beverly Hills and the Westside"}.`,
+    description,
+    alternates: { canonical },
+    openGraph: {
+      title: `${data.agent.display_name} | 90210 Estate`,
+      description,
+      url: canonical,
+      type: "profile",
+      images: data.agent.avatar_url ? [{ url: data.agent.avatar_url, alt: data.agent.display_name }] : undefined,
+    },
   };
 }
 
@@ -24,9 +35,26 @@ export default async function AgentPage({ params }: Props) {
   if (!data) notFound();
 
   const { agent, listings } = data;
+  const canonical = `https://90210estate.com/agents/${agent.slug}`;
+  const agentJsonLd = {
+    "@context": "https://schema.org",
+    "@type": "Person",
+    name: agent.display_name,
+    url: canonical,
+    image: agent.avatar_url || undefined,
+    jobTitle: agent.title || "Real Estate Professional",
+    description: agent.bio || undefined,
+    worksFor: agent.brokerage ? { "@type": "Organization", name: agent.brokerage } : undefined,
+    telephone: agent.phone || undefined,
+    email: agent.email || undefined,
+    sameAs: agent.website ? [agent.website] : undefined,
+    areaServed: agent.service_areas?.map((area) => ({ "@type": "Place", name: area })),
+    identifier: agent.dre_license || undefined,
+  };
 
   return (
     <main>
+      <script type="application/ld+json" dangerouslySetInnerHTML={{ __html: JSON.stringify(agentJsonLd) }} />
       <section className="agent-profile-hero">
         <div className="shell agent-profile-head">
           <div className="agent-profile-photo">
