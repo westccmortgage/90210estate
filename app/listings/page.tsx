@@ -1,4 +1,5 @@
 import type { Metadata } from "next";
+import Link from "next/link";
 import { ListingExplorer } from "../components/listing-explorer";
 import { PageHero } from "../components/page-hero";
 import { getMarketplaceListings } from "../lib/crm-marketplace";
@@ -31,6 +32,9 @@ export default async function ListingsPage() {
         description="Browse properties published by their listing agents, with clear attribution and a direct path to the professional representing each home."
       />
       <section className="section shell">
+        <div className="notice" style={{ marginBottom: 32 }}>
+          Looking specifically for the Beverly Hills ZIP? <Link href="/90210-homes-for-sale"><strong>Explore 90210 homes for sale</strong></Link> with a guide to Beverly Hills, Trousdale Estates, and Beverly Hills Post Office.
+        </div>
         <ListingExplorer listings={listings} />
       </section>
     </main>
