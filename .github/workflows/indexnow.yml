@@ -1,0 +1,109 @@
+name: 90210 Estate IndexNow
+
+on:
+  push:
+    branches: [main]
+    paths:
+      - 'app/**'
+      - 'public/**'
+      - '.github/workflows/indexnow.yml'
+  schedule:
+    - cron: '23 16 * * *'
+  workflow_dispatch:
+
+permissions:
+  contents: read
+
+jobs:
+  submit:
+    runs-on: ubuntu-latest
+    timeout-minutes: 8
+    steps:
+      - name: Wait for production deploy
+        if: github.event_name != 'schedule'
+        run: sleep 120
+
+      - name: Submit sitemap URLs to IndexNow
+        env:
+          EVENT_NAME: ${{ github.event_name }}
+          INDEXNOW_KEY: 9b8ecf0d2a364d0eb8b3813f8e43c5a7
+        run: |
+          python - <<'PY'
+          import datetime as dt
+          import json
+          import os
+          import urllib.error
+          import urllib.request
+          import xml.etree.ElementTree as ET
+
+          host = '90210estate.com'
+          sitemap_url = f'https://{host}/sitemap.xml'
+          key = os.environ['INDEXNOW_KEY']
+          event = os.environ.get('EVENT_NAME', 'push')
+
+          try:
+              request = urllib.request.Request(
+                  sitemap_url,
+                  headers={'User-Agent': '90210Estate-IndexNow/1.0'},
+              )
+              with urllib.request.urlopen(request, timeout=30) as response:
+                  xml = response.read()
+          except Exception as exc:
+              print(f'IndexNow best-effort: could not fetch sitemap: {exc}')
+              raise SystemExit(0)
+
+          root = ET.fromstring(xml)
+          ns = {'sm': 'http://www.sitemaps.org/schemas/sitemap/0.9'}
+          rows = []
+          for item in root.findall('sm:url', ns):
+              loc = item.findtext('sm:loc', default='', namespaces=ns).strip()
+              lastmod = item.findtext('sm:lastmod', default='', namespaces=ns).strip()
+              if loc:
+                  rows.append((loc, lastmod))
+
+          if event == 'schedule':
+              cutoff = dt.datetime.now(dt.timezone.utc) - dt.timedelta(days=2)
+              selected = []
+              for loc, lastmod in rows:
+                  if '/agents/' in loc:
+                      selected.append(loc)
+                      continue
+                  if not lastmod:
+                      continue
+                  try:
+                      changed = dt.datetime.fromisoformat(lastmod.replace('Z', '+00:00'))
+                      if changed.tzinfo is None:
+                          changed = changed.replace(tzinfo=dt.timezone.utc)
+                      if changed >= cutoff:
+                          selected.append(loc)
+                  except ValueError:
+                      continue
+          else:
+              selected = [loc for loc, _ in rows]
+
+          selected = list(dict.fromkeys(selected))[:10000]
+          if not selected:
+              print('No recent sitemap URLs need IndexNow submission.')
+              raise SystemExit(0)
+
+          payload = json.dumps({
+              'host': host,
+              'key': key,
+              'keyLocation': f'https://{host}/{key}.txt',
+              'urlList': selected,
+          }).encode('utf-8')
+
+          try:
+              request = urllib.request.Request(
+                  'https://api.indexnow.org/indexnow',
+                  data=payload,
+                  headers={'Content-Type': 'application/json; charset=utf-8'},
+                  method='POST',
+              )
+              with urllib.request.urlopen(request, timeout=30) as response:
+                  print(f'IndexNow submitted {len(selected)} URLs; HTTP {response.status}')
+          except urllib.error.HTTPError as exc:
+              print(f'IndexNow best-effort HTTP {exc.code}: {exc.read().decode("utf-8", "ignore")[:500]}')
+          except Exception as exc:
+              print(f'IndexNow best-effort submission error: {exc}')
+          PY
