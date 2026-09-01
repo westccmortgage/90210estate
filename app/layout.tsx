@@ -11,13 +11,17 @@ export const metadata: Metadata = {
   },
   description:
     "An independent real estate marketplace for homes, open houses, neighborhoods, and agents across Beverly Hills, Bel Air, and Holmby Hills.",
-  alternates: { canonical: "/" },
+  robots: { index: true, follow: true },
   openGraph: {
     title: "90210 Estate",
     description: "The local marketplace for Beverly Hills homes and real estate professionals.",
-    url: "https://90210estate.com",
     siteName: "90210 Estate",
     type: "website",
+  },
+  twitter: {
+    card: "summary_large_image",
+    title: "90210 Estate",
+    description: "Beverly Hills homes, neighborhoods, open houses, and local real estate professionals.",
   },
 };
 
