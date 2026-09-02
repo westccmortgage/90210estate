@@ -6,7 +6,8 @@ export function ListingSubmission() {
   const [status, setStatus] = useState("");
   function submit(event: FormEvent<HTMLFormElement>) {
     event.preventDefault();
-    const data = new FormData(event.currentTarget);
+    const form = event.currentTarget;
+    const data = new FormData(form);
     const lines = [
       `Agent: ${data.get("agent")}`,
       `Brokerage: ${data.get("brokerage")}`,
@@ -17,8 +18,25 @@ export function ListingSubmission() {
       `MLS / listing URL: ${data.get("url")}`,
       `Notes: ${data.get("notes")}`,
     ];
-    window.location.href = `mailto:westccmortgage@gmail.com?subject=${encodeURIComponent("90210 Estate — listing submission")}&body=${encodeURIComponent(lines.join("\n"))}`;
-    setStatus("Your email app has been opened with the submission details. Attach listing photos or a media link before sending.");
+    setStatus("sending");
+    const body = new URLSearchParams();
+    body.append("form-name", "listing-submission");
+    data.forEach((value, key) => body.append(key, value.toString()));
+    fetch("/__forms.html", {
+      method: "POST",
+      headers: { "Content-Type": "application/x-www-form-urlencoded" },
+      body: body.toString(),
+    })
+      .then((res) => {
+        if (!res.ok) throw new Error(String(res.status));
+        form.reset();
+        setStatus("Submission received. We review every listing before it is published.");
+      })
+      .catch(() => {
+        // Fall back to the visitor's mail client rather than losing the listing.
+        window.location.href = `mailto:westccmortgage@gmail.com?subject=${encodeURIComponent("90210 Estate — listing submission")}&body=${encodeURIComponent(lines.join("\n"))}`;
+        setStatus("Your email app has been opened with the submission details. Attach listing photos or a media link before sending.");
+      });
   }
   return (
     <form className="form-card" onSubmit={submit}>

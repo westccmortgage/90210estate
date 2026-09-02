@@ -1,0 +1,34 @@
+<!doctype html>
+<html>
+<head><meta charset="utf-8"><title>Form schemas</title><meta name="robots" content="noindex"></head>
+<body>
+<!-- Netlify registers the forms it finds in static HTML at deploy time. Next.js
+     pages are rendered by the runtime and never parsed, so the schemas live here.
+     Keep the field names in sync with the components that post to this path —
+     any name missing here is dropped from the submission. -->
+
+<form name="contact" netlify netlify-honeypot="company" hidden>
+  <input type="hidden" name="form-name" value="contact">
+  <input type="text" name="company">
+  <input name="name">
+  <input name="email">
+  <input name="phone">
+  <input name="subject">
+  <textarea name="message"></textarea>
+  <input name="page">
+</form>
+
+<form name="listing-submission" netlify netlify-honeypot="company" hidden>
+  <input type="hidden" name="form-name" value="listing-submission">
+  <input type="text" name="company">
+  <input name="agent">
+  <input name="brokerage">
+  <input name="license">
+  <input name="email">
+  <input name="phone">
+  <input name="property">
+  <input name="url">
+  <textarea name="notes"></textarea>
+</form>
+</body>
+</html>
