@@ -8,7 +8,19 @@ import { formatPrice, getMarketplaceListings } from "../lib/crm-marketplace";
 export const dynamic = "force-dynamic";
 export const revalidate = 0;
 
-export const metadata: Metadata = { title: "Open Houses" };
+export const metadata: Metadata = {
+  title: "Beverly Hills & 90210 Open Houses",
+  description:
+    "Browse upcoming agent-authorized open houses in Beverly Hills, ZIP code 90210, and nearby Westside neighborhoods, with direct listing-agent attribution.",
+  alternates: { canonical: "/open-houses" },
+  openGraph: {
+    title: "Beverly Hills & 90210 Open Houses | 90210 Estate",
+    description:
+      "Upcoming open houses published by the listing professionals representing each property across Beverly Hills, 90210, and the nearby Westside.",
+    url: "/open-houses",
+    type: "website",
+  },
+};
 
 function windowLabel(startsAt?: string | null, endsAt?: string | null) {
   if (!startsAt) return null;
@@ -49,8 +61,69 @@ export default async function OpenHousesPage() {
       return at - bt;
     });
 
+  const openHouseJsonLd = {
+    "@context": "https://schema.org",
+    "@graph": [
+      {
+        "@type": "CollectionPage",
+        name: "Beverly Hills and 90210 Open Houses",
+        description:
+          "Upcoming agent-authorized open houses across Beverly Hills, ZIP code 90210, and nearby Westside neighborhoods.",
+        url: "https://90210estate.com/open-houses",
+        mainEntity: {
+          "@type": "ItemList",
+          itemListElement: upcoming.map(({ listing }, index) => ({
+            "@type": "ListItem",
+            position: index + 1,
+            url: `https://90210estate.com/listings/${listing.slug}`,
+            name: `Open house at ${listing.address}`,
+          })),
+        },
+      },
+      ...upcoming.map(({ listing }) => {
+        const photo = listing.photos?.find((p) => p.primary) || listing.photos?.[0];
+        return {
+          "@type": "Event",
+          name: `Open House: ${listing.address}`,
+          startDate: listing.open_house?.startsAt,
+          endDate: listing.open_house?.endsAt || listing.open_house?.startsAt,
+          eventStatus: "https://schema.org/EventScheduled",
+          eventAttendanceMode: "https://schema.org/OfflineEventAttendanceMode",
+          url: `https://90210estate.com/listings/${listing.slug}`,
+          image: photo?.url ? [photo.url] : undefined,
+          description:
+            listing.open_house?.notes ||
+            `Open house for ${listing.address}. Contact the named listing professional for property and showing details.`,
+          location: {
+            "@type": "Place",
+            name: listing.address,
+            address: {
+              "@type": "PostalAddress",
+              streetAddress: listing.street || undefined,
+              addressLocality: listing.city || undefined,
+              addressRegion: listing.state || "CA",
+              postalCode: listing.zip || undefined,
+              addressCountry: "US",
+            },
+          },
+          organizer: listing.agent
+            ? {
+                "@type": "Person",
+                name: listing.agent.display_name,
+                url: `https://90210estate.com/agents/${listing.agent.slug}`,
+              }
+            : undefined,
+        };
+      }),
+    ],
+  };
+
   return (
     <main>
+      <script
+        type="application/ld+json"
+        dangerouslySetInnerHTML={{ __html: JSON.stringify(openHouseJsonLd) }}
+      />
       <PageHero
         eyebrow="Plan a visit"
         title="Beverly Hills open houses."
