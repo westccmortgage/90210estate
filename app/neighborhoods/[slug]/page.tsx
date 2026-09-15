@@ -11,6 +11,27 @@ export const revalidate = 0;
 
 type Props = { params: { slug: string } };
 
+const relatedNeighborhoods: Record<string, string[]> = {
+  "beverly-hills": ["beverly-hills-flats", "trousdale-estates", "beverly-hills-post-office", "holmby-hills"],
+  "beverly-hills-flats": ["beverly-hills", "trousdale-estates", "century-city"],
+  "trousdale-estates": ["beverly-hills", "beverly-hills-gateway", "bel-air"],
+  "beverly-hills-gateway": ["beverly-hills", "trousdale-estates", "bel-air"],
+  "beverly-hills-post-office": ["beverly-hills", "bel-air", "sunset-strip"],
+  "bel-air": ["holmby-hills", "beverly-hills-post-office", "century-city"],
+  "holmby-hills": ["bel-air", "beverly-hills", "century-city"],
+  "sunset-strip": ["west-hollywood-west", "beverly-hills-post-office", "beverly-hills"],
+  "west-hollywood-west": ["sunset-strip", "beverly-hills", "century-city"],
+  "century-city": ["holmby-hills", "beverly-hills", "west-hollywood-west"],
+};
+
+const zipHubNeighborhoods = new Set([
+  "beverly-hills",
+  "beverly-hills-flats",
+  "trousdale-estates",
+  "beverly-hills-gateway",
+  "beverly-hills-post-office",
+]);
+
 export function generateStaticParams() {
   return neighborhoods.map((neighborhood) => ({ slug: neighborhood.slug }));
 }
@@ -39,17 +60,42 @@ export default async function NeighborhoodPage({ params }: Props) {
 
   const listings = await getMarketplaceListings(neighborhood.feedArea);
   const canonical = `https://90210estate.com/neighborhoods/${neighborhood.slug}`;
+  const related = (relatedNeighborhoods[neighborhood.slug] || [])
+    .map((slug) => getNeighborhood(slug))
+    .filter((item): item is NonNullable<typeof item> => Boolean(item));
+
   const jsonLd = {
     "@context": "https://schema.org",
-    "@type": "CollectionPage",
-    name: neighborhood.seoTitle,
-    description: neighborhood.description,
-    url: canonical,
-    about: {
-      "@type": "Place",
-      name: neighborhood.name,
-      address: { "@type": "PostalAddress", addressRegion: "CA", addressCountry: "US" },
-    },
+    "@graph": [
+      {
+        "@type": "CollectionPage",
+        name: neighborhood.seoTitle,
+        description: neighborhood.description,
+        url: canonical,
+        about: {
+          "@type": "Place",
+          name: neighborhood.name,
+          address: { "@type": "PostalAddress", addressRegion: "CA", addressCountry: "US" },
+        },
+      },
+      {
+        "@type": "BreadcrumbList",
+        itemListElement: [
+          {
+            "@type": "ListItem",
+            position: 1,
+            name: "Neighborhoods",
+            item: "https://90210estate.com/neighborhoods",
+          },
+          {
+            "@type": "ListItem",
+            position: 2,
+            name: neighborhood.name,
+            item: canonical,
+          },
+        ],
+      },
+    ],
   };
 
   return (
@@ -70,6 +116,11 @@ export default async function NeighborhoodPage({ params }: Props) {
           <p>{neighborhood.overview}</p>
           <p>{neighborhood.housing}</p>
           <p>{neighborhood.planning}</p>
+          {zipHubNeighborhoods.has(neighborhood.slug) ? (
+            <Link className="text-link" href="/90210-homes-for-sale">
+              Browse homes for sale across 90210 <span>→</span>
+            </Link>
+          ) : null}
         </div>
       </section>
 
@@ -101,6 +152,32 @@ export default async function NeighborhoodPage({ params }: Props) {
         </div>
         <ListingExplorer listings={listings} />
       </section>
+
+      {related.length > 0 ? (
+        <section className="section soft">
+          <div className="shell">
+            <div className="section-heading row-heading">
+              <div>
+                <p className="eyebrow">Nearby Westside areas</p>
+                <h2>Other neighborhoods buyers compare.</h2>
+              </div>
+              <Link className="text-link desktop-only" href="/neighborhoods">
+                Explore all neighborhoods <span>→</span>
+              </Link>
+            </div>
+            <div className="data-grid">
+              {related.map((area) => (
+                <article className="data-card" key={area.slug}>
+                  <p className="eyebrow">{area.region}</p>
+                  <h3>{area.name}</h3>
+                  <p>{area.description}</p>
+                  <Link href={`/neighborhoods/${area.slug}`}>Explore {area.name} →</Link>
+                </article>
+              ))}
+            </div>
+          </div>
+        </section>
+      ) : null}
 
       <section className="section midnight">
         <div className="shell finance-band">
