@@ -132,7 +132,7 @@ export default function Home() {
           <span>01</span>
           <h3>Buying</h3>
           <p>Browse verified local homes and learn the character of each neighborhood.</p>
-          <Link href="/listings">Search homes →</Link>
+          <Link href="/90210-homes-for-sale">Explore 90210 homes for sale →</Link>
         </div>
         <div className="path">
           <span>02</span>
