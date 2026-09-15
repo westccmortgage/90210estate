@@ -9,4 +9,3 @@ export function PageHero({ eyebrow, title, description }: { eyebrow: string; tit
     </section>
   );
 }
-

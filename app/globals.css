@@ -112,10 +112,18 @@ h2 { margin-bottom: 0; font-size: clamp(38px, 4vw, 58px); line-height: 1.03; fon
 .path p { min-height: 74px; color: var(--muted); font-size: 15px; line-height: 1.65; }
 .path a { color: var(--navy); font-size: 13px; font-weight: 700; }
 
-.page-hero { color: white; background: linear-gradient(120deg, var(--navy-deep), #173e5e); }
-.page-hero .shell { min-height: 395px; padding-top: 95px; padding-bottom: 70px; display: flex; flex-direction: column; justify-content: end; }
-.page-hero h1 { max-width: 900px; margin-bottom: 22px; font-size: clamp(48px, 6vw, 78px); line-height: .98; font-weight: 500; letter-spacing: -.045em; }
+.page-hero { position: relative; color: white; background: linear-gradient(120deg, var(--navy-deep), #173e5e); overflow: hidden; isolation: isolate; }
+.page-hero::before { content: ""; position: absolute; z-index: -2; inset: -28%; background: radial-gradient(ellipse at 76% 26%, rgba(112,163,194,.2) 0%, rgba(63,116,151,.1) 31%, transparent 58%), radial-gradient(ellipse at 48% 108%, rgba(3,18,30,.34) 0%, transparent 52%); transform: translate3d(-1.5%, -1%, 0) scale(1); animation: page-hero-breathe 15s ease-in-out infinite alternate; pointer-events: none; }
+.page-hero::after { content: ""; position: absolute; z-index: -1; inset: 0; background: linear-gradient(112deg, transparent 30%, rgba(190,215,229,.045) 46%, rgba(126,172,198,.07) 52%, transparent 68%); background-size: 210% 100%; background-position: 100% 0; animation: page-hero-drift 18s ease-in-out infinite; pointer-events: none; }
+.page-hero .shell { position: relative; z-index: 1; min-height: 395px; padding-top: 95px; padding-bottom: 70px; display: flex; flex-direction: column; justify-content: end; }
+.page-hero .eyebrow.light { color: #b8cbd8; }
+.page-hero h1 { max-width: 900px; margin-bottom: 22px; font-size: clamp(48px, 6vw, 78px); line-height: .98; font-weight: 500; letter-spacing: -.045em; text-wrap: balance; }
 .page-hero p:last-child { max-width: 720px; margin: 0; color: #c5d1da; font-size: 18px; line-height: 1.6; }
+@keyframes page-hero-breathe { from { transform: translate3d(-1.5%, -1%, 0) scale(1); } to { transform: translate3d(2%, 1.5%, 0) scale(1.06); } }
+@keyframes page-hero-drift { 0%, 18% { background-position: 100% 0; } 72%, 100% { background-position: 0 0; } }
+@media (prefers-reduced-motion: reduce) {
+  .page-hero::before, .page-hero::after { animation: none; }
+}
 .content-shell { width: min(960px, calc(100% - 48px)); margin: 0 auto; }
 .content-section { padding: 80px 0; }
 .content-section h2 { font-size: clamp(35px, 4vw, 50px); }

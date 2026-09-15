@@ -2,7 +2,7 @@
 
 import { FormEvent, useState } from "react";
 
-const INBOX = "westccmortgage@gmail.com";
+const INBOX = "info@90210estate.com";
 
 /** Posts to the schema declared in public/__forms.html — see the note there. */
 export function ContactForm({ subject = "" }: { subject?: string }) {

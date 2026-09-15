@@ -1,4 +1,4 @@
-const promoEmail = process.env.NEXT_PUBLIC_SOCIAL_PROMO_EMAIL || "westccmortgage@gmail.com";
+const promoEmail = process.env.NEXT_PUBLIC_SOCIAL_PROMO_EMAIL || "info@90210estate.com";
 
 const promoSubject = "Please post my listing — 90210 Estate social media";
 
