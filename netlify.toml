@@ -1,0 +1,16 @@
+# Listing and agent photos arrive as full-size originals; app/lib/image-cdn.ts routes
+# them through the Netlify Image CDN, which only fetches from these hosts.
+[images]
+  remote_images = [
+    'https://agpqetgxaibwzhuyanpk\.supabase\.co/storage/v1/object/public/.*',
+    'https://media\.crmls\.org/.*',
+    'https://media-production\.lp-cdn\.com/.*',
+    'https://cdn\.agentimagehosting\.com/.*',
+  ]
+
+# The netlify.app address serves the same pages as the real domain; send it there.
+[[redirects]]
+  from = "https://90210-estate.netlify.app/*"
+  to = "https://90210estate.com/:splat"
+  status = 301
+  force = true

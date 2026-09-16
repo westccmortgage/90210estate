@@ -12,7 +12,7 @@ export const metadata: Metadata = {
   description:
     "Explore authorized homes for sale in ZIP code 90210, including Beverly Hills and Beverly Hills Post Office, with direct listing-agent attribution and local buying guidance.",
   alternates: { canonical: "/90210-homes-for-sale" },
-  openGraph: {
+  openGraph: { images: [{ url: "/og-default.jpg", width: 1200, height: 630, alt: "90210 Estate" }],
     title: "90210 Homes for Sale & Real Estate | 90210 Estate",
     description:
       "Authorized 90210 listings, Beverly Hills and BHPO neighborhood guidance, open houses, local agents, and financing planning.",

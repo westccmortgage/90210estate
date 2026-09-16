@@ -366,3 +366,13 @@ h2 { margin-bottom: 0; font-size: clamp(38px, 4vw, 58px); line-height: 1.03; fon
 .wccm-card .agent-contact-lines { margin-top: 20px; }
 .wccm-button { width: 100%; margin-top: 22px; }
 .wccm-legal { margin: 14px 0 0; color: var(--muted); font-size: 11px; line-height: 1.55; }
+
+/* Phones: the gallery is one swipeable row instead of dozens of stacked photos, so
+   the details, the listing agent and financing follow right after it. */
+@media (max-width: 680px) {
+  .listing-gallery { display: flex; gap: 8px; margin-top: 0; padding: 0 20px; overflow-x: auto; scroll-snap-type: x mandatory; scroll-padding: 0 20px; -webkit-overflow-scrolling: touch; }
+  .listing-gallery img { flex: 0 0 86%; width: 86%; height: 260px; scroll-snap-align: start; }
+  .listing-gallery img:first-child { grid-row: auto; }
+}
+/* Links under the locator map are easy to hit with a thumb. */
+.mini-map-head a { display: inline-block; padding: 8px 0; }

@@ -13,6 +13,7 @@ export const metadata: Metadata = {
     "An independent real estate marketplace for homes, open houses, neighborhoods, and agents across Beverly Hills, Bel Air, and Holmby Hills.",
   robots: { index: true, follow: true },
   openGraph: {
+    images: [{ url: "/og-default.jpg", width: 1200, height: 630, alt: "90210 Estate" }],
     title: "90210 Estate",
     description: "The local marketplace for Beverly Hills homes and real estate professionals.",
     siteName: "90210 Estate",

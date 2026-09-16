@@ -4,6 +4,7 @@ import { useEffect, useMemo, useRef } from "react";
 import type { Map as LeafletMap, Marker } from "leaflet";
 import "leaflet/dist/leaflet.css";
 import { formatPrice, type MarketplaceListing } from "../lib/crm-marketplace";
+import { cdnImage } from "../lib/image-cdn";
 
 type Spot = { listing: MarketplaceListing; lat: number; lng: number };
 
@@ -52,7 +53,7 @@ function cardElement(listing: MarketplaceListing) {
   if (photo) {
     const image = document.createElement("img");
     image.className = "map-card-photo";
-    image.src = photo;
+    image.src = cdnImage(photo, 480) || photo;
     image.alt = "";
     image.loading = "lazy";
     card.append(image);
@@ -63,8 +64,8 @@ function cardElement(listing: MarketplaceListing) {
   body.append(span("map-card-addr", listing.street ? [listing.street, listing.city].filter(Boolean).join(", ") : listing.address));
   const specs = span("map-card-specs", "");
   [
-    listing.beds != null ? `${listing.beds} bd` : null,
-    listing.baths != null ? `${listing.baths} ba` : null,
+    listing.beds ? `${listing.beds} bd` : null,
+    listing.baths ? `${listing.baths} ba` : null,
     listing.sqft ? `${Number(listing.sqft).toLocaleString("en-US")} sq ft` : null,
     !listing.beds && !listing.sqft ? listing.property_type : null,
   ].forEach((item) => { if (item) specs.append(span("", item)); });

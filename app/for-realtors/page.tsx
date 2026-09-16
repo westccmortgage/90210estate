@@ -4,7 +4,7 @@ import { SocialPromoCta } from "../components/social-promo-cta";
 import { PageHero } from "../components/page-hero";
 import { grcrmLoginUrl } from "../lib/crm-marketplace";
 
-export const metadata: Metadata = {
+export const metadata: Metadata = { alternates: { canonical: "/for-realtors" },
   title: "For Local Realtors",
   description: "A free local profile, listing promotion, and private GR CRM workspace for Beverly Hills and Westside real estate professionals.",
 };

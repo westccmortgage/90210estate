@@ -2,6 +2,7 @@ import type { Metadata } from "next";
 import Link from "next/link";
 import { getMarketplaceAgents, grcrmLoginUrl } from "../lib/crm-marketplace";
 import { PageHero } from "../components/page-hero";
+import { cdnImage } from "../lib/image-cdn";
 
 // Listings are edited in GR CRM and must disappear from this site the moment
 // they are unpublished or deleted there, so this page is never cached.
@@ -29,7 +30,7 @@ export default async function AgentsPage() {
           <div className="agent-grid">
             {agents.map((agent) => (
               <article className="agent-card" key={agent.id}>
-                {agent.avatar_url ? <img src={agent.avatar_url} alt={agent.display_name} /> : <div className="agent-placeholder">Local agent</div>}
+                {agent.avatar_url ? <img src={cdnImage(agent.avatar_url, 640)} alt={agent.display_name} loading="lazy" decoding="async" /> : <div className="agent-placeholder">Local agent</div>}
                 <div>
                   <p className="eyebrow">{agent.brokerage || "Beverly Hills real estate"}</p>
                   <h2><Link href={`/agents/${agent.slug}`}>{agent.display_name}</Link></h2>

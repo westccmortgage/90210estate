@@ -2,6 +2,7 @@ import type { Metadata } from "next";
 import Link from "next/link";
 import { notFound } from "next/navigation";
 import { formatPrice, getMarketplaceAgent } from "../../lib/crm-marketplace";
+import { cdnImage } from "../../lib/image-cdn";
 
 // Listings are edited in GR CRM and must disappear from this site the moment
 // they are unpublished or deleted there, so this page is never cached.
@@ -58,7 +59,7 @@ export default async function AgentPage({ params }: Props) {
       <section className="agent-profile-hero">
         <div className="shell agent-profile-head">
           <div className="agent-profile-photo">
-            {agent.avatar_url ? <img src={agent.avatar_url} alt={agent.display_name} /> : <span>Local agent</span>}
+            {agent.avatar_url ? <img src={cdnImage(agent.avatar_url, 640)} alt={agent.display_name} /> : <span>Local agent</span>}
           </div>
           <div>
             <p className="eyebrow">{agent.brokerage || "Independent local professional"}</p>
@@ -107,16 +108,17 @@ export default async function AgentPage({ params }: Props) {
                 return (
                   <article className="market-listing-card" key={listing.id}>
                     <Link className="market-listing-photo" href={`/listings/${listing.slug}`}>
-                      {photo ? <img src={photo} alt={listing.address} /> : <span>Photo coming soon</span>}
+                      {photo ? <img src={cdnImage(photo, 760)} alt={listing.address} loading="lazy" decoding="async" /> : <span>Photo coming soon</span>}
                       {listing.status && <small>{listing.status}</small>}
                     </Link>
                     <div className="market-listing-copy">
                       <p className="market-price">{formatPrice(listing.price, listing.purpose)}</p>
                       <h2><Link href={`/listings/${listing.slug}`}>{listing.address}</Link></h2>
                       <p className="market-specs">
-                        {listing.beds != null && <span>{listing.beds} beds</span>}
-                        {listing.baths != null && <span>{listing.baths} baths</span>}
-                        {listing.sqft != null && <span>{Number(listing.sqft).toLocaleString()} sq ft</span>}
+                        {listing.beds ? <span>{listing.beds} beds</span> : null}
+                        {listing.baths ? <span>{listing.baths} baths</span> : null}
+                        {listing.sqft ? <span>{Number(listing.sqft).toLocaleString()} sq ft</span> : null}
+                    {!listing.beds && !listing.sqft && listing.property_type ? <span>{listing.property_type}</span> : null}
                       </p>
                     </div>
                   </article>

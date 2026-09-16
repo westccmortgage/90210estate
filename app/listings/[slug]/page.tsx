@@ -4,6 +4,7 @@ import { notFound } from "next/navigation";
 import { ListingMiniMap } from "../../components/listing-mini-map";
 import { MortgageContact } from "../../components/mortgage-contact";
 import { formatPrice, getMarketplaceListing } from "../../lib/crm-marketplace";
+import { cdnImage } from "../../lib/image-cdn";
 
 // Listings are edited in GR CRM and must disappear from this site the moment
 // they are unpublished or deleted there, so this page is never cached.
@@ -77,9 +78,9 @@ export default async function ListingPage({ params }: Props) {
           <h1>{listing.address}</h1>
           <p className="listing-detail-price">{formatPrice(listing.price, listing.purpose)}</p>
           <div className="listing-detail-specs">
-            {listing.beds != null && <span><strong>{listing.beds}</strong> beds</span>}
-            {listing.baths != null && <span><strong>{listing.baths}</strong> baths</span>}
-            {listing.sqft != null && <span><strong>{Number(listing.sqft).toLocaleString()}</strong> sq ft</span>}
+            {listing.beds ? <span><strong>{listing.beds}</strong> beds</span> : null}
+            {listing.baths ? <span><strong>{listing.baths}</strong> baths</span> : null}
+            {listing.sqft ? <span><strong>{Number(listing.sqft).toLocaleString()}</strong> sq ft</span> : null}
             {listing.property_type && <span>{listing.property_type}</span>}
           </div>
         </div>
@@ -90,7 +91,7 @@ export default async function ListingPage({ params }: Props) {
           {photos.map((photo, index) => (
             <img
               key={photo.url}
-              src={photo.url}
+              src={cdnImage(photo.url, index === 0 ? 1400 : 900)}
               alt={photo.alt || `${listing.address}, photo ${index + 1}`}
               loading={index < 3 ? "eager" : "lazy"}
               decoding="async"
@@ -114,7 +115,7 @@ export default async function ListingPage({ params }: Props) {
         <div className="listing-side">
         <aside className="agent-contact-card">
           <p className="eyebrow">Listing professional</p>
-          {agent?.avatar_url && <img className="agent-avatar" src={agent.avatar_url} alt={agent.display_name} />}
+          {agent?.avatar_url && <img className="agent-avatar" src={cdnImage(agent.avatar_url, 240)} alt={agent.display_name} />}
           <h2>{agent?.display_name || "Local listing agent"}</h2>
           {agent?.title && <p>{agent.title}</p>}
           {agent?.brokerage && <p><strong>{agent.brokerage}</strong></p>}

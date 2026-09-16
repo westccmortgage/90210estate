@@ -5,6 +5,7 @@ import { useSearchParams } from "next/navigation";
 import { Suspense, useMemo, useState } from "react";
 import type { MarketplaceListing } from "../lib/crm-marketplace";
 import { ListingsMap } from "./listings-map";
+import { cdnImage } from "../lib/image-cdn";
 
 function priceLabel(listing: MarketplaceListing) {
   if (listing.price == null) return "Price on request";
@@ -95,21 +96,22 @@ function Explorer({ listings }: { listings: MarketplaceListing[] }) {
         <ListingsMap listings={filtered} />
       ) : filtered.length ? (
         <div className="market-listing-grid">
-          {filtered.map((listing) => {
+          {filtered.map((listing, index) => {
             const photo = listing.photos?.find((item) => item.primary)?.url || listing.photos?.[0]?.url;
             return (
               <article className="market-listing-card" key={listing.id}>
                 <Link className="market-listing-photo" href={`/listings/${listing.slug}`}>
-                  {photo ? <img src={photo} alt={listing.photos?.[0]?.alt || listing.address} /> : <span>Photo coming soon</span>}
+                  {photo ? <img src={cdnImage(photo, 760)} alt={listing.photos?.[0]?.alt || listing.address} loading={index < 3 ? "eager" : "lazy"} decoding="async" /> : <span>Photo coming soon</span>}
                   {listing.status && <small>{listing.status}</small>}
                 </Link>
                 <div className="market-listing-copy">
                   <p className="market-price">{priceLabel(listing)}</p>
                   <h2><Link href={`/listings/${listing.slug}`}>{listing.address}</Link></h2>
                   <p className="market-specs">
-                    {listing.beds != null && <span>{listing.beds} beds</span>}
-                    {listing.baths != null && <span>{listing.baths} baths</span>}
-                    {listing.sqft != null && <span>{Number(listing.sqft).toLocaleString()} sq ft</span>}
+                    {listing.beds ? <span>{listing.beds} beds</span> : null}
+                    {listing.baths ? <span>{listing.baths} baths</span> : null}
+                    {listing.sqft ? <span>{Number(listing.sqft).toLocaleString()} sq ft</span> : null}
+                    {!listing.beds && !listing.sqft && listing.property_type ? <span>{listing.property_type}</span> : null}
                   </p>
                   {listing.agent && (
                     <p className="market-agent">

@@ -51,7 +51,7 @@ export function ListingSubmission() {
         <div className="field full"><label htmlFor="notes">Notes for the feature</label><textarea id="notes" name="notes" rows={4} placeholder="Open house date, special features, preferred contact method…" /></div>
       </div>
       <div className="form-actions">
-        <button className="button navy" type="submit">Prepare submission email</button>
+        <button className="button navy" type="submit">Submit listing</button>
         <span className="form-note">No fee. Submission is reviewed before publication.</span>
       </div>
       {status && <p className="notice" role="status" style={{ marginTop: 22 }}>{status}</p>}

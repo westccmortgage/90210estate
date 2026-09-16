@@ -13,7 +13,7 @@ export const metadata: Metadata = {
   title: "Beverly Hills Homes for Sale",
   description: "Search agent-authorized homes for sale across Beverly Hills, Bel Air, Holmby Hills, and nearby Westside neighborhoods.",
   alternates: { canonical: "/listings" },
-  openGraph: {
+  openGraph: { images: [{ url: "/og-default.jpg", width: 1200, height: 630, alt: "90210 Estate" }],
     title: "Beverly Hills Homes for Sale | 90210 Estate",
     description: "Browse agent-authorized homes across Beverly Hills and the Westside.",
     url: "/listings",

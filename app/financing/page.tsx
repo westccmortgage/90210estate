@@ -11,7 +11,7 @@ export const metadata: Metadata = {
   description:
     "Plan financing for a Beverly Hills or 90210 home purchase, including jumbo, self-employed, condo, second-home, and investment-property scenarios.",
   alternates: { canonical: "/financing" },
-  openGraph: {
+  openGraph: { images: [{ url: "/og-default.jpg", width: 1200, height: 630, alt: "90210 Estate" }],
     title: "Beverly Hills & 90210 Home Financing | 90210 Estate",
     description:
       "Estimate a payment, understand common high-value purchase considerations, and connect separately with a licensed mortgage professional.",

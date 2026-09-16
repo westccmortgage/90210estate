@@ -45,7 +45,7 @@ export function generateMetadata({ params }: Props): Metadata {
     title: neighborhood.seoTitle,
     description: neighborhood.description,
     alternates: { canonical },
-    openGraph: {
+    openGraph: { images: [{ url: "/og-default.jpg", width: 1200, height: 630, alt: "90210 Estate" }],
       title: neighborhood.seoTitle,
       description: neighborhood.description,
       url: canonical,

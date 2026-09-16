@@ -2,6 +2,7 @@ import type { Metadata } from "next";
 import Link from "next/link";
 import { PageHero } from "../components/page-hero";
 import { formatPrice, getMarketplaceListings } from "../lib/crm-marketplace";
+import { cdnImage } from "../lib/image-cdn";
 
 // Open-house times come from the listing agent's CRM and change often, so this
 // page always reads the live feed instead of serving a build-time snapshot.
@@ -13,7 +14,7 @@ export const metadata: Metadata = {
   description:
     "Browse upcoming agent-authorized open houses in Beverly Hills, ZIP code 90210, and nearby Westside neighborhoods, with direct listing-agent attribution.",
   alternates: { canonical: "/open-houses" },
-  openGraph: {
+  openGraph: { images: [{ url: "/og-default.jpg", width: 1200, height: 630, alt: "90210 Estate" }],
     title: "Beverly Hills & 90210 Open Houses | 90210 Estate",
     description:
       "Upcoming open houses published by the listing professionals representing each property across Beverly Hills, 90210, and the nearby Westside.",
@@ -139,7 +140,7 @@ export default async function OpenHousesPage() {
                   <Link className="market-listing-photo" href={`/listings/${listing.slug}`}>
                     {photo?.url ? (
                       /* eslint-disable-next-line @next/next/no-img-element */
-                      <img src={photo.url} alt={photo.alt || listing.address} loading="lazy" />
+                      <img src={cdnImage(photo.url, 760)} alt={photo.alt || listing.address} loading="lazy" decoding="async" />
                     ) : null}
                   </Link>
                   <div className="market-listing-copy">
