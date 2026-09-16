@@ -4,6 +4,7 @@ import Link from "next/link";
 import { useSearchParams } from "next/navigation";
 import { Suspense, useMemo, useState } from "react";
 import type { MarketplaceListing } from "../lib/crm-marketplace";
+import { ListingsMap } from "./listings-map";
 
 function priceLabel(listing: MarketplaceListing) {
   if (listing.price == null) return "Price on request";
@@ -21,6 +22,16 @@ function Explorer({ listings }: { listings: MarketplaceListing[] }) {
   const [price, setPrice] = useState("any");
   const [beds, setBeds] = useState("any");
   const [propertyType, setPropertyType] = useState("any");
+  // "See all listings on the map" on a listing page links here with ?view=map, and
+  // the switch keeps the address in step so a shared or reloaded page opens the same view.
+  const [view, setView] = useState<"list" | "map">(params.get("view") === "map" ? "map" : "list");
+  const choose = (next: "list" | "map") => {
+    setView(next);
+    const url = new URL(window.location.href);
+    if (next === "map") url.searchParams.set("view", "map");
+    else url.searchParams.delete("view");
+    window.history.replaceState(null, "", url);
+  };
 
   const filtered = useMemo(() => {
     const term = search.trim().toLowerCase();
@@ -37,6 +48,7 @@ function Explorer({ listings }: { listings: MarketplaceListing[] }) {
       return true;
     });
   }, [beds, listings, price, propertyType, search]);
+  const mapped = filtered.filter((listing) => Number.isFinite(listing.lat) && Number.isFinite(listing.lng)).length;
 
   return (
     <div>
@@ -66,7 +78,22 @@ function Explorer({ listings }: { listings: MarketplaceListing[] }) {
         <button className="button navy" type="button">Search</button>
       </div>
 
-      {filtered.length ? (
+      {filtered.length > 0 && (
+        <div className="view-bar">
+          <p className="view-count">
+            {filtered.length} {filtered.length === 1 ? "home" : "homes"}
+            {view === "map" && mapped < filtered.length ? ` · ${mapped} on the map` : ""}
+          </p>
+          <div className="view-switch" role="group" aria-label="Show listings as">
+            <button type="button" className={view === "list" ? "on" : ""} aria-pressed={view === "list"} onClick={() => choose("list")}>List</button>
+            <button type="button" className={view === "map" ? "on" : ""} aria-pressed={view === "map"} onClick={() => choose("map")}>Map</button>
+          </div>
+        </div>
+      )}
+
+      {filtered.length > 0 && view === "map" ? (
+        <ListingsMap listings={filtered} />
+      ) : filtered.length ? (
         <div className="market-listing-grid">
           {filtered.map((listing) => {
             const photo = listing.photos?.find((item) => item.primary)?.url || listing.photos?.[0]?.url;

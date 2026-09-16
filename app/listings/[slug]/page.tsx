@@ -1,6 +1,7 @@
 import type { Metadata } from "next";
 import Link from "next/link";
 import { notFound } from "next/navigation";
+import { ListingMiniMap } from "../../components/listing-mini-map";
 import { formatPrice, getMarketplaceListing } from "../../lib/crm-marketplace";
 
 // Listings are edited in GR CRM and must disappear from this site the moment
@@ -106,6 +107,7 @@ export default async function ListingPage({ params }: Props) {
             <ul className="feature-chips">{listing.features.map((feature) => <li key={feature}>{feature}</li>)}</ul>
           )}
           {listing.video?.url && <a className="button outline" href={listing.video.url} target="_blank" rel="noopener noreferrer">Watch video tour</a>}
+          <ListingMiniMap lat={listing.lat} lng={listing.lng} area={[listing.city, listing.state].filter(Boolean).join(", ")} />
         </article>
 
         <aside className="agent-contact-card">

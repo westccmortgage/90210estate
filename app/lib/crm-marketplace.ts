@@ -44,6 +44,8 @@ export type MarketplaceListing = {
   photos?: MarketplacePhoto[];
   video?: { url?: string | null } | null;
   open_house?: { startsAt?: string | null; endsAt?: string | null; notes?: string | null } | null;
+  lat?: number | null;
+  lng?: number | null;
   published_at?: string;
   updated_at?: string;
   agent?: MarketplaceAgent | null;

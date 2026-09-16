@@ -317,3 +317,38 @@ h2 { margin-bottom: 0; font-size: clamp(38px, 4vw, 58px); line-height: 1.03; fon
 .agent-contact-lines a { color: inherit; text-decoration: none; border-bottom: 1px solid currentColor; padding-bottom: 1px; }
 .agent-contact-lines a:hover { opacity: .72; }
 .agent-contact-lines.light a { color: #fff; border-bottom-color: rgba(255,255,255,.45); }
+
+/* Map view of the listings; the points come from GR CRM */
+.view-bar { display: flex; align-items: center; justify-content: space-between; gap: 16px; margin-top: 24px; }
+.view-bar + .market-listing-grid { margin-top: 16px; }
+.view-count { margin: 0; color: var(--muted); font-size: 13px; }
+.view-switch { display: inline-flex; border: 1px solid var(--line); background: white; }
+.view-switch button { min-width: 88px; padding: 12px 18px; border: 0; background: transparent; color: var(--navy); cursor: pointer; font: inherit; font-size: 11px; font-weight: 700; letter-spacing: .14em; text-transform: uppercase; }
+.view-switch button + button { border-left: 1px solid var(--line); }
+.view-switch button.on { background: var(--navy); color: white; }
+.listings-map { height: 66vh; min-height: 460px; margin-top: 16px; border: 1px solid var(--line); background: var(--mist); }
+.listings-map.leaflet-container, .mini-map.leaflet-container { font-family: inherit; }
+.listings-map-empty { display: flex; align-items: center; justify-content: center; min-height: 240px; height: auto; color: var(--muted); }
+.map-pin-wrap { background: none; border: 0; }
+.map-dot { display: block; width: 15px; height: 15px; border: 2.5px solid white; border-radius: 50%; background: var(--navy); box-shadow: 0 2px 8px rgba(7, 24, 39, .35); transform: translate(-50%, -50%); transition: transform .15s ease, box-shadow .15s ease; }
+.map-dot:hover { box-shadow: 0 8px 18px rgba(7, 24, 39, .45); transform: translate(-50%, -50%) scale(1.5); }
+.leaflet-popup.map-card-popup { margin-bottom: 14px; }
+.map-card-popup .leaflet-popup-content-wrapper { padding: 0; overflow: hidden; border-radius: 0; box-shadow: 0 24px 60px rgba(7, 24, 39, .22); }
+.map-card-popup .leaflet-popup-content { width: 232px !important; margin: 0; }
+.map-card-popup .leaflet-popup-tip-container { display: none; }
+.map-card { display: block; color: var(--ink) !important; text-decoration: none; }
+.map-card-photo { display: block; width: 100%; height: 130px; object-fit: cover; }
+.map-card-body { display: block; padding: 12px 14px 14px; }
+.map-card-price { display: block; color: #8b6632; font-size: 17px; font-weight: 700; }
+.map-card:hover .map-card-price { color: var(--navy); }
+.map-card-addr { display: block; margin-top: 3px; color: var(--muted); font-size: 12.5px; line-height: 1.4; }
+.map-card-specs { display: flex; gap: 10px; margin-top: 7px; color: var(--muted); font-size: 12px; }
+.mini-map-wrap { margin-top: 34px; border: 1px solid var(--line); background: white; }
+.mini-map-head { display: flex; flex-wrap: wrap; align-items: center; justify-content: space-between; gap: 10px; padding: 14px 16px; }
+.mini-map-head p { margin: 0; color: var(--ink); font-size: 14px; font-weight: 700; }
+.mini-map-head a { color: var(--navy); font-size: 12px; font-weight: 700; letter-spacing: .04em; }
+.mini-map { width: 100%; height: 240px; }
+@media (max-width: 680px) {
+  .listings-map { height: 56vh; min-height: 360px; }
+  .view-switch button { min-width: 72px; padding: 11px 14px; }
+}
