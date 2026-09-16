@@ -2,6 +2,7 @@ import type { Metadata } from "next";
 import Link from "next/link";
 import { notFound } from "next/navigation";
 import { ListingMiniMap } from "../../components/listing-mini-map";
+import { MortgageContact } from "../../components/mortgage-contact";
 import { formatPrice, getMarketplaceListing } from "../../lib/crm-marketplace";
 
 // Listings are edited in GR CRM and must disappear from this site the moment
@@ -110,6 +111,7 @@ export default async function ListingPage({ params }: Props) {
           <ListingMiniMap lat={listing.lat} lng={listing.lng} area={[listing.city, listing.state].filter(Boolean).join(", ")} />
         </article>
 
+        <div className="listing-side">
         <aside className="agent-contact-card">
           <p className="eyebrow">Listing professional</p>
           {agent?.avatar_url && <img className="agent-avatar" src={agent.avatar_url} alt={agent.display_name} />}
@@ -128,10 +130,9 @@ export default async function ListingPage({ params }: Props) {
             {agent?.email && <a className="button outline" href={`mailto:${agent.email}?subject=${encodeURIComponent(`Question about ${listing.address}`)}`}>Email agent</a>}
             {agent && <Link className="text-link" href={`/agents/${agent.slug}`}>View agent profile <span>→</span></Link>}
           </div>
-          <hr />
-          <p><strong>Need financing?</strong><br />West Coast Capital Mortgage can provide a separate, no-obligation financing consultation.</p>
-          <Link className="button gold" href={`/financing?property=${encodeURIComponent(listing.address)}&price=${listing.price || ""}`}>Estimate payment</Link>
         </aside>
+        <MortgageContact address={listing.address} purpose={listing.purpose} source="90210estate" />
+        </div>
       </section>
     </main>
   );

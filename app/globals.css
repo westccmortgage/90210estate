@@ -352,3 +352,17 @@ h2 { margin-bottom: 0; font-size: clamp(38px, 4vw, 58px); line-height: 1.03; fon
   .listings-map { height: 56vh; min-height: 360px; }
   .view-switch button { min-width: 72px; padding: 11px 14px; }
 }
+
+/* West Coast Capital Mortgage card under the listing agent */
+.listing-side { display: grid; gap: 18px; align-content: start; }
+.wccm-card { padding: 34px; border: 1px solid var(--line); background: white; }
+.wccm-card .eyebrow { margin-bottom: 16px; }
+.wccm-officer { display: flex; align-items: center; gap: 16px; }
+.wccm-officer strong { display: block; color: var(--ink); font-family: var(--serif); font-size: 24px; font-weight: 400; line-height: 1.15; }
+.wccm-officer div span { display: block; margin-top: 3px; color: var(--muted); font-size: 13px; line-height: 1.4; }
+/* the office photo is a wide desk shot, so it is zoomed to head and shoulders */
+.wccm-face { flex: none; display: block; width: 76px; height: 76px; overflow: hidden; border-radius: 50%; }
+.wccm-face img { display: block; width: 200%; max-width: none; margin: -3% 0 0 -50%; }
+.wccm-card .agent-contact-lines { margin-top: 20px; }
+.wccm-button { width: 100%; margin-top: 22px; }
+.wccm-legal { margin: 14px 0 0; color: var(--muted); font-size: 11px; line-height: 1.55; }
