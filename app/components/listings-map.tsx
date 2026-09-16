@@ -96,6 +96,18 @@ export function ListingsMap({ listings }: { listings: MarketplaceListing[] }) {
       // On a phone the card opens from a tap, so the map may move to show all of it;
       // with a mouse it must stay still, or hovering would drag the map around.
       const touch = window.matchMedia("(hover: none)").matches;
+      // With a mouse the map never moves, so a card that would spill over an edge of
+      // the map opens below its dot, or slides sideways, instead of being cut off.
+      const keepInside = (element: HTMLElement) => {
+        element.style.marginBottom = "";
+        element.style.marginLeft = "";
+        if (!holder.current) return;
+        const frame = holder.current.getBoundingClientRect();
+        const card = element.getBoundingClientRect();
+        if (card.top < frame.top + 8) element.style.marginBottom = `${-(card.height + 22)}px`;
+        if (card.left < frame.left + 8) element.style.marginLeft = `${frame.left + 8 - card.left}px`;
+        else if (card.right > frame.right - 8) element.style.marginLeft = `${frame.right - 8 - card.right}px`;
+      };
       let closeTimer: number | undefined;
       let openedAt = 0;
       const cancelClose = () => window.clearTimeout(closeTimer);
@@ -132,7 +144,9 @@ export function ListingsMap({ listings }: { listings: MarketplaceListing[] }) {
         marker.on("mouseout", () => closeSoon(marker));
         marker.on("popupopen", (event) => {
           const element = event.popup.getElement();
-          if (!element || element.dataset.hover) return; // the popup element is reused on every open
+          if (!element) return;
+          if (!touch) keepInside(element);
+          if (element.dataset.hover) return; // the popup element is reused on every open
           element.dataset.hover = "1";
           element.addEventListener("mouseenter", cancelClose);
           element.addEventListener("mouseleave", () => closeSoon(marker));
