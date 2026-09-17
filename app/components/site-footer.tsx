@@ -14,7 +14,7 @@ export function SiteFooter() {
         </div>
         <div>
           <h3>Explore</h3>
-          <Link href="/listings">Homes</Link>
+          <Link href="/90210-homes-for-sale">90210 Homes for Sale</Link>
           <Link href="/open-houses">Open Houses</Link>
           <Link href="/neighborhoods">Neighborhoods</Link>
           <Link href="/market">Market Reports</Link>
