@@ -4,7 +4,7 @@ import Link from "next/link";
 import { useState } from "react";
 
 const links = [
-  ["/listings", "Homes"],
+  ["/90210-homes-for-sale", "90210 Homes"],
   ["/agents", "Agents"],
   ["/open-houses", "Open Houses"],
   ["/neighborhoods", "Neighborhoods"],
