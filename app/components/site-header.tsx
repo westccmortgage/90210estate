@@ -6,9 +6,6 @@ import { useState } from "react";
 const links = [
   ["/listings", "Homes for Sale"],
   ["/agents", "Agents"],
-  ["/open-houses", "Open Houses"],
-  ["/neighborhoods", "Neighborhoods"],
-  ["/market", "Market"],
   ["/for-realtors", "For Realtors"],
   ["/financing", "Financing"],
 ];

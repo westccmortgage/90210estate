@@ -111,16 +111,14 @@ export default function FinancingPage() {
 
       <PageHero
         eyebrow="Beverly Hills & 90210 financing"
-        title="Plan the financing before the offer."
-        description="Estimate the payment, identify the questions that matter for a high-value purchase, and connect separately with a licensed mortgage professional—without changing your relationship with the listing agent."
+        title="Financing with West Coast Capital Mortgage."
+        description="90210 Estate works with one mortgage team for every buyer here: West Coast Capital Mortgage. Talk to a licensed broker before you write an offer—without changing your relationship with the listing agent."
       />
 
       <section className="section shell split intro">
         <div>
-          <p className="eyebrow">Before you compete for the home</p>
-          <h2>A 90210 purchase may need more than a quick preapproval.</h2>
-        </div>
-        <div className="body-copy">
+          <p className="eyebrow">West Coast Capital Mortgage</p>
+          <h2>Start the conversation before you compete for the home.</h2>
           <p>
             Beverly Hills and surrounding Westside purchases can involve jumbo loan
             amounts, complex income, substantial reserves, appraisal questions,
@@ -130,18 +128,35 @@ export default function FinancingPage() {
           </p>
           <p>
             90210 Estate keeps the roles clear: property and showing questions stay
-            with the named real estate professional. Mortgage services are optional
-            and provided separately by West Coast Capital Mortgage Inc.
+            with the named real estate professional. Mortgage services are provided
+            separately by West Coast Capital Mortgage Inc.
           </p>
           <div className="inline-actions">
             <Link className="text-link" href="/90210-homes-for-sale">
               Search 90210 homes <span>→</span>
             </Link>
-            <Link className="text-link" href="/neighborhoods">
-              Compare neighborhoods <span>→</span>
+            <Link className="text-link" href="/for-realtors">
+              For local Realtors <span>→</span>
             </Link>
           </div>
         </div>
+        <aside className="wccm-card">
+          <p className="eyebrow">Get started</p>
+          <div className="wccm-officer">
+            <span className="wccm-face"><img src="https://westcoastcapitalmortgage.com/assets/anatoliy-kanevsky.webp" alt="Anatoliy Kanevsky" loading="lazy" /></span>
+            <div>
+              <strong>Anatoliy Kanevsky</strong>
+              <span>Mortgage broker · NMLS #2775380</span>
+              <span>West Coast Capital Mortgage</span>
+            </div>
+          </div>
+          <ul className="agent-contact-lines">
+            <li><a href="tel:+13106541577">(310) 654-1577</a></li>
+            <li><a href="mailto:westccmortgage@gmail.com?subject=Financing%20question%20%E2%80%94%2090210%20Estate">westccmortgage@gmail.com</a></li>
+          </ul>
+          <a className="button gold wccm-button" href="https://westcoastcapitalmortgage.com/apply?utm_source=90210estate&utm_medium=financing&utm_campaign=pre-approval&utm_content=financing-page#apply-form">Get pre-approved</a>
+          <p className="wccm-legal">West Coast Capital Mortgage Inc. · NMLS #2817729 · CA DRE #02440065 · Equal Housing Opportunity</p>
+        </aside>
       </section>
 
       <section className="section soft">
