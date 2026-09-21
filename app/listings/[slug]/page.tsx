@@ -13,6 +13,19 @@ export const revalidate = 0;
 
 type Props = { params: { slug: string } };
 
+function listingIntent(purpose?: string | null, status?: string | null) {
+  const normalizedPurpose = String(purpose || "").toLowerCase();
+  const normalizedStatus = String(status || "").toLowerCase();
+
+  if (normalizedStatus.includes("sold") || normalizedStatus.includes("off market")) {
+    return "Real Estate";
+  }
+  if (normalizedPurpose.includes("rent") || normalizedPurpose.includes("lease")) {
+    return "Home for Rent";
+  }
+  return "Home for Sale";
+}
+
 export async function generateMetadata({ params }: Props): Promise<Metadata> {
   const listing = await getMarketplaceListing(params.slug);
   if (!listing) return { title: "Listing not found", robots: { index: false, follow: false } };
@@ -20,9 +33,10 @@ export async function generateMetadata({ params }: Props): Promise<Metadata> {
   const description = listing.description || `${formatPrice(listing.price, listing.purpose)} property represented by a verified local agent.`;
   const canonical = `/listings/${listing.slug}`;
   const primaryPhoto = listing.photos?.find((photo) => photo.primary)?.url || listing.photos?.[0]?.url;
+  const intent = listingIntent(listing.purpose, listing.status);
 
   return {
-    title: `${listing.address} | Homes for Sale`,
+    title: `${listing.address} | ${intent}`,
     description,
     alternates: { canonical },
     openGraph: {
