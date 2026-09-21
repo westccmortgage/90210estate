@@ -24,6 +24,7 @@ export function SiteHeader() {
           {links.map(([href, label]) => <Link key={href} href={href} onClick={() => setOpen(false)}>{label}</Link>)}
           <a className="nav-cta" href={crmLogin} onClick={() => setOpen(false)}>Agent login</a>
         </nav>
+        <Link className="header-homes" href="/listings" onClick={() => setOpen(false)}>Homes for Sale</Link>
         <button className="menu-button" type="button" onClick={() => setOpen(!open)} aria-expanded={open} aria-label="Open menu">
           <span /><span /><span />
         </button>

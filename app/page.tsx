@@ -1,6 +1,12 @@
 import type { Metadata } from "next";
 import Link from "next/link";
 import { LocationSearch } from "./components/location-search";
+import { HomeListings } from "./components/home-listings";
+
+// The homes below the hero come from the live CRM feed, so render per request:
+// a listing unpublished in the CRM must not linger on the home page.
+export const dynamic = "force-dynamic";
+export const revalidate = 0;
 
 export const metadata: Metadata = {
   title: "Beverly Hills Real Estate & Homes for Sale",
@@ -45,6 +51,8 @@ export default function Home() {
       </section>
 
       <LocationSearch />
+
+      <HomeListings />
 
       <section className="section shell split intro">
         <div>
