@@ -4,6 +4,7 @@
   remote_images = [
     'https://agpqetgxaibwzhuyanpk\.supabase\.co/storage/v1/object/public/.*',
     'https://media\.crmls\.org/.*',
+    'https://cdn\.photos\.sparkplatform\.com/.*',
     'https://media-production\.lp-cdn\.com/.*',
     'https://cdn\.agentimagehosting\.com/.*',
   ]
