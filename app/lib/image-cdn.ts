@@ -7,6 +7,7 @@
 const CDN_HOSTS = new Set([
   "agpqetgxaibwzhuyanpk.supabase.co",
   "media.crmls.org",
+  "cdn.photos.sparkplatform.com",
   "media-production.lp-cdn.com",
   "cdn.agentimagehosting.com",
 ]);
