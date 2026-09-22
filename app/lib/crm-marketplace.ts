@@ -71,12 +71,18 @@ async function readFeed<T>(query = ""): Promise<T | null> {
   }
 }
 
+// A home that is sold, closed or leased is no longer on the market: it drops out
+// of the public lists, the map and the sitemap, and stays on its agent's profile
+// as proof of their work (the listing page itself keeps working for direct links).
+export const isSoldListing = (listing: { status?: string | null }) =>
+  /^(sold|closed|leased|rented)$/i.test((listing.status || "").trim());
+
 export async function getMarketplaceListings(area?: string) {
   const params = new URLSearchParams();
   if (area) params.set("area", area);
   params.set("limit", "60");
   const data = await readFeed<{ ok: boolean; listings?: MarketplaceListing[] }>(`?${params.toString()}`);
-  return data?.ok && Array.isArray(data.listings) ? data.listings : [];
+  return data?.ok && Array.isArray(data.listings) ? data.listings.filter((listing) => !isSoldListing(listing)) : [];
 }
 
 export async function getMarketplaceListing(slug: string) {
@@ -91,7 +97,10 @@ export async function getMarketplaceAgents() {
 
 export async function getMarketplaceAgent(slug: string) {
   const data = await readFeed<{ ok: boolean; agent?: MarketplaceAgent; listings?: MarketplaceListing[] }>(`?agent=${encodeURIComponent(slug)}&limit=60`);
-  return data?.ok && data.agent ? { agent: data.agent, listings: data.listings || [] } : null;
+  if (!data?.ok || !data.agent) return null;
+  // Sold homes sit under whatever is still for sale.
+  const listings = [...(data.listings || [])].sort((a, b) => Number(isSoldListing(a)) - Number(isSoldListing(b)));
+  return { agent: data.agent, listings };
 }
 
 export function formatPrice(value?: number | null, purpose?: string | null) {
