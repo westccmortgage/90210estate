@@ -5,7 +5,7 @@
 const MORTGAGE_FORM = "https://westcoastcapitalmortgage.com/apply";
 const PHONE = "(310) 654-1577";
 const EMAIL = "westccmortgage@gmail.com";
-const OFFICER_PHOTO = "https://westcoastcapitalmortgage.com/assets/anatoliy-kanevsky.webp";
+const OFFICER_PHOTO = "/media/anatoliy-kanevsky-480.webp";
 
 function formUrl(source: string, address: string) {
   const query = new URLSearchParams({

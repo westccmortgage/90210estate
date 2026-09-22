@@ -143,7 +143,7 @@ export default function FinancingPage() {
         <aside className="wccm-card">
           <p className="eyebrow">Get started</p>
           <div className="wccm-officer">
-            <span className="wccm-face"><img src="https://westcoastcapitalmortgage.com/assets/anatoliy-kanevsky.webp" alt="Anatoliy Kanevsky" loading="lazy" /></span>
+            <span className="wccm-face"><img src="/media/anatoliy-kanevsky-480.webp" alt="Anatoliy Kanevsky" loading="lazy" /></span>
             <div>
               <strong>Anatoliy Kanevsky</strong>
               <span>Mortgage broker · NMLS #2775380</span>
