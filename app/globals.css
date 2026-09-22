@@ -350,7 +350,7 @@ h2 { margin-bottom: 0; font-size: clamp(38px, 4vw, 58px); line-height: 1.03; fon
 .mini-map { width: 100%; height: 240px; }
 @media (max-width: 680px) {
   .listings-map { height: 56vh; min-height: 360px; }
-  .view-switch button { min-width: 72px; padding: 11px 14px; }
+  .view-switch button { min-width: 72px; padding: 13px 14px; }
 }
 
 /* West Coast Capital Mortgage card under the listing agent */
@@ -375,7 +375,7 @@ h2 { margin-bottom: 0; font-size: clamp(38px, 4vw, 58px); line-height: 1.03; fon
   .listing-gallery img:first-child { grid-row: auto; }
 }
 /* Links under the locator map are easy to hit with a thumb. */
-.mini-map-head a { display: inline-block; padding: 8px 0; }
+.mini-map-head a { display: inline-block; padding: 13px 0; }
 
 /* Home page: listings straight after a shorter hero, and the menu visible on
    the page (not behind the burger) down to tablet width. On phones the burger
@@ -392,4 +392,27 @@ h2 { margin-bottom: 0; font-size: clamp(38px, 4vw, 58px); line-height: 1.03; fon
 }
 @media (max-width: 700px) {
   .header-homes { display: inline-flex; align-items: center; min-height: 40px; margin-left: auto; margin-right: 8px; padding: 0 14px; color: white; background: var(--navy); font-size: 13px; font-weight: 700; white-space: nowrap; }
+}
+
+/* Phones: several standalone CTA/nav text-links (cards, the three-paths section,
+   the footer) were under the 40px touch-target minimum. Padding/min-height only,
+   so nothing changes on tablet or desktop. */
+@media (max-width: 680px) {
+  .text-link,
+  .path > a,
+  .listing-preview > a,
+  .data-card a {
+    display: inline-flex;
+    align-items: center;
+    min-height: 40px;
+  }
+  .footer-main > div:not(.footer-brand) a {
+    display: flex;
+    align-items: center;
+    min-height: 40px;
+  }
+  .agent-card h2 a {
+    display: inline-block;
+    padding: 7px 0;
+  }
 }
