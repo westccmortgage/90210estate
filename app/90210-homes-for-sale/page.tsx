@@ -8,12 +8,12 @@ export const dynamic = "force-dynamic";
 export const revalidate = 0;
 
 export const metadata: Metadata = {
-  title: "90210 Homes for Sale & Real Estate",
+  title: "Homes for Sale in 90210",
   description:
     "Explore authorized homes for sale in ZIP code 90210, including Beverly Hills and Beverly Hills Post Office, with direct listing-agent attribution and local buying guidance.",
   alternates: { canonical: "/90210-homes-for-sale" },
   openGraph: { images: [{ url: "/og-default.jpg", width: 1200, height: 630, alt: "90210 Estate" }],
-    title: "90210 Homes for Sale & Real Estate | 90210 Estate",
+    title: "Homes for Sale in 90210 | 90210 Estate",
     description:
       "Authorized 90210 listings, Beverly Hills and BHPO neighborhood guidance, open houses, local agents, and financing planning.",
     url: "/90210-homes-for-sale",
@@ -33,7 +33,7 @@ export default async function Zip90210Page() {
   const jsonLd = {
     "@context": "https://schema.org",
     "@type": "CollectionPage",
-    name: "90210 Homes for Sale & Real Estate",
+    name: "Homes for Sale in 90210",
     description:
       "Authorized homes for sale in ZIP code 90210 with direct listing-agent attribution and local real estate guidance.",
     url: canonical,
