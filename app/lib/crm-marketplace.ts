@@ -75,7 +75,7 @@ async function readFeed<T>(query = ""): Promise<T | null> {
 // of the public lists, the map and the sitemap, and stays on its agent's profile
 // as proof of their work (the listing page itself keeps working for direct links).
 export const isSoldListing = (listing: { status?: string | null }) =>
-  /^(sold|closed|leased|rented)$/i.test((listing.status || "").trim());
+  /^(sold|closed|leased|rented|off[ -]?market)$/i.test((listing.status || "").trim());
 
 export async function getMarketplaceListings(area?: string) {
   const params = new URLSearchParams();

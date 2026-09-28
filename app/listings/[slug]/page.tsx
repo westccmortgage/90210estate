@@ -3,7 +3,7 @@ import Link from "next/link";
 import { notFound } from "next/navigation";
 import { ListingMiniMap } from "../../components/listing-mini-map";
 import { MortgageContact } from "../../components/mortgage-contact";
-import { formatPrice, getMarketplaceListing } from "../../lib/crm-marketplace";
+import { formatPrice, getMarketplaceListing, isSoldListing } from "../../lib/crm-marketplace";
 import { cdnImage } from "../../lib/image-cdn";
 
 // Listings are edited in GR CRM and must disappear from this site the moment
@@ -79,7 +79,9 @@ export default async function ListingPage({ params }: Props) {
       price: listing.price,
       priceCurrency: "USD",
       url: canonical,
-      availability: "https://schema.org/InStock",
+      availability: isSoldListing(listing)
+        ? "https://schema.org/SoldOut"
+        : "https://schema.org/InStock",
     } : undefined,
   };
 
