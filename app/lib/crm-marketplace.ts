@@ -54,6 +54,7 @@ export type MarketplaceListing = {
 const crmOrigin = (process.env.GRCRM_PUBLIC_URL || process.env.NEXT_PUBLIC_GRCRM_URL || "https://grcrm.com").replace(/\/$/, "");
 const marketplaceId = process.env.MARKETPLACE_ID || "90210-estate";
 const feedUrl = process.env.CRM_PUBLIC_FEED_URL || `${crmOrigin}/.netlify/functions/marketplace-public-feed`;
+const feedTimeoutMs = 8000;
 
 // Never cached: the CRM is the system of record, and a listing removed there has
 // to vanish from this site on the next request, not several minutes later.
@@ -63,7 +64,13 @@ async function readFeed<T>(query = ""): Promise<T | null> {
     const supplied = new URLSearchParams(query.replace(/^\?/, ""));
     supplied.forEach((value, key) => url.searchParams.set(key, value));
     url.searchParams.set("marketplace", marketplaceId);
-    const response = await fetch(url, { cache: "no-store" });
+    // Keep crawlable marketplace pages available when the upstream CRM or its
+    // database is slow. An empty live result is safer than letting the whole
+    // page or sitemap time out with a 5xx response.
+    const response = await fetch(url, {
+      cache: "no-store",
+      signal: AbortSignal.timeout(feedTimeoutMs),
+    });
     if (!response.ok) return null;
     return (await response.json()) as T;
   } catch {
