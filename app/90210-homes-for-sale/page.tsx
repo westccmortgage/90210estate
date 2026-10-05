@@ -22,7 +22,7 @@ export const metadata: Metadata = {
 };
 
 export default async function Zip90210Page() {
-  const allListings = await getMarketplaceListings();
+  const allListings = await getMarketplaceListings("90210");
   const listings = allListings.filter((listing) => {
     const is90210 = String(listing.zip || "").trim() === "90210";
     const isRental = String(listing.purpose || "").toLowerCase() === "rent";
