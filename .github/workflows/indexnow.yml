@@ -63,9 +63,20 @@ jobs:
 
           if event == 'schedule':
               cutoff = dt.datetime.now(dt.timezone.utc) - dt.timedelta(days=2)
+              live_collection_urls = {
+                  f'https://{host}',
+                  f'https://{host}/90210-homes-for-sale',
+                  f'https://{host}/listings',
+                  f'https://{host}/open-houses',
+                  f'https://{host}/agents',
+              }
               selected = []
               for loc, lastmod in rows:
-                  if '/agents/' in loc:
+                  if (
+                      loc in live_collection_urls
+                      or loc.startswith(f'https://{host}/neighborhoods/')
+                      or '/agents/' in loc
+                  ):
                       selected.append(loc)
                       continue
                   if not lastmod:
