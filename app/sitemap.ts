@@ -18,7 +18,6 @@ const routes: Array<{
   { path: "/neighborhoods", changeFrequency: "weekly", priority: 0.9 },
   { path: "/open-houses", changeFrequency: "daily", priority: 0.85 },
   { path: "/agents", changeFrequency: "daily", priority: 0.8 },
-  { path: "/market", changeFrequency: "weekly", priority: 0.75 },
   { path: "/financing", changeFrequency: "monthly", priority: 0.7 },
   { path: "/for-realtors", changeFrequency: "monthly", priority: 0.7 },
   { path: "/about", changeFrequency: "monthly", priority: 0.6 },
