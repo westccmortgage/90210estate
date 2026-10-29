@@ -23,9 +23,29 @@ export const metadata: Metadata = {
 
 export default async function ListingsPage() {
   const listings = await getMarketplaceListings();
+  const canonical = "https://90210estate.com/listings";
+  const jsonLd = {
+    "@context": "https://schema.org",
+    "@type": "CollectionPage",
+    name: "Beverly Hills Homes for Sale",
+    description:
+      "Agent-authorized homes across Beverly Hills, Bel Air, Holmby Hills, and nearby Westside neighborhoods.",
+    url: canonical,
+    mainEntity: {
+      "@type": "ItemList",
+      numberOfItems: listings.length,
+      itemListElement: listings.slice(0, 60).map((listing, index) => ({
+        "@type": "ListItem",
+        position: index + 1,
+        url: `https://90210estate.com/listings/${listing.slug}`,
+        name: listing.address,
+      })),
+    },
+  };
 
   return (
     <main>
+      <script type="application/ld+json" dangerouslySetInnerHTML={{ __html: JSON.stringify(jsonLd) }} />
       <PageHero
         eyebrow="Local home search"
         title="Homes across Beverly Hills and the Westside."
